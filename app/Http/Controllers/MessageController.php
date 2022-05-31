@@ -35,7 +35,21 @@ class MessageController extends Controller
         $items = Message::where('user_id', \Auth::user()->id)->get();
         
         return view('index', ['items' => $items]);
+        // if ( Auth::check() ) {
+        // }
     }
+
+    // 追記:ログインしていない場合loginページに移動させる
+    public function __construct(){
+        $this->middleware('auth');
+    }
+
+    // ログイン中のユーザーをログアウトさせる
+    public function logout(){
+        return Auth::logout();
+    }
+
+
     // public function show(Request $request) 
     // {
     //     // $user = $items->text();
