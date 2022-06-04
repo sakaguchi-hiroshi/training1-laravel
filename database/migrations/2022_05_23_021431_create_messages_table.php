@@ -19,6 +19,7 @@ class CreateMessagesTable extends Migration
             $table->string('text');
             $table->timestamp('created_at')->useCurrent()->nullable();
             $table->timestamp('updated_at')->useCurrent()->nullable();
+            // $table->softDeletes();
         });
     }
 

@@ -22,7 +22,6 @@ class MessageController extends Controller
     }
     public function create(Request $request)
     {
-        // dd($request->all());
         $this->validate($request, Message::$rules);
         $form = new Message;
         $form->user_id = $request->user()->id;
@@ -32,12 +31,15 @@ class MessageController extends Controller
     }
     public function show(Request $request)
     {
-        $items = Message::where('user_id', \Auth::user()->id)->get();
+        $items = Message::where('user_id', \Auth::user()->id)->take(5)->get();
+        // $gets = Message::orderBy('id', 'desc')->take(5);
+        // $items = $gets->get();
         
         return view('index', ['items' => $items]);
         // if ( Auth::check() ) {
-        // }
-    }
+            // }
+        }
+        // dd($items->all());
 
     // 追記:ログインしていない場合loginページに移動させる
     public function __construct(){
