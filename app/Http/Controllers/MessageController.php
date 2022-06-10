@@ -12,13 +12,15 @@ class MessageController extends Controller
     // dd($authUser);
     public function index()
     {
+        $users = User::all();
         $authUser = Auth::user();
-        $items = Message::with('user')->get();
+        $items = Message::where('user_id', $authUser->id)->get();
         $params = [
+                'users' => $users,
                 'authUser' => $authUser,
                 'items' => $items,
             ];
-            return view('index', $params);
+        return view('index', $params);
     }
     public function create(Request $request)
     {
@@ -29,17 +31,29 @@ class MessageController extends Controller
         $form->save();
         return redirect('/');
     }
-    public function show(Request $request)
+    public function show($id)
     {
-        $items = Message::where('user_id', \Auth::user()->id)->take(5)->get();
+        $item = User::find($id);
+        $user = Message::where('user_id', $id)->get();
+        // dd($user);
+        $params = [
+            'item' => $item,
+            'user' => $user,
+        ];
+        return view('show', $params);
+        // $user = User::with('messages'->user_id)->get();
+    }
+    
+    // public function show($id)
+    // {
+    //     $items = Message::where('user_id', \Auth::user()->id)->take(5)->get();
         // $gets = Message::orderBy('id', 'desc')->take(5);
         // $items = $gets->get();
         
-        return view('index', ['items' => $items]);
+        // return view('index', ['items' => $items]);
         // if ( Auth::check() ) {
             // }
-        }
-        // dd($items->all());
+    // }
 
     // 追記:ログインしていない場合loginページに移動させる
     public function __construct(){

@@ -9,9 +9,15 @@
 </head>
 <body>
   <section class="section">
-    <p>{{$authUser}}</p>
-    <br>
-    <br>
+    @foreach ($users as $user)
+    <!-- <form action="/show" method="post"> -->
+      <div>
+        <a href="{{ url('/show', ['id'=>$user->id]) }}">
+          {{$user->name}}
+        </a>
+      </div>
+    <!-- </form> -->
+    @endforeach
     @if (count($errors) > 0)
     <ul>
       @foreach ($errors->all() as $error)
@@ -26,9 +32,7 @@
       <input type="submit" name="create" value="送信">
     </form>
     @foreach ($items as $item)
-    <form class="show" action="show" method="post">
       <p>{{$item->text}}</p>
-    </form>
     @endforeach
   </section>
 </body>
