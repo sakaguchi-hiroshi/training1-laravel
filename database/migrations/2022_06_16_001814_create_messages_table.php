@@ -15,8 +15,9 @@ class CreateMessagesTable extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
             $table->string('text');
+            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('room_id')->constrained('rooms');
             $table->timestamp('created_at')->useCurrent()->nullable();
             $table->timestamp('updated_at')->useCurrent()->nullable();
             // $table->softDeletes();
@@ -33,3 +34,4 @@ class CreateMessagesTable extends Migration
         Schema::dropIfExists('messages');
     }
 }
+

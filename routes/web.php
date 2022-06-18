@@ -20,7 +20,7 @@ use App\Http\Controllers\MessageController;
 Route::get('/', [MessageController::class, 'index']);
 Route::post('/create', [MessageController::class, 'create']);
 Route::get('/logout', [MessageController::class, 'logout']);
-Route::get('/show/{id}', [MessageController::class, 'show']);
+Route::get('/show/{id}', [MessageController::class, 'show'])->name('show');
 
 // Route::get('dashboard', function () {
 //     return view('index');

@@ -13,10 +13,15 @@ class Message extends Model
     protected $guarded = ['id'];
 
     public static $rules = array(
+        'text' => 'string|min:1|max:191',
         'user_id' => 'required',
-        'text' => 'string|min:1|max:191'
+        'room_id' => 'required',
     );
+    
     public function user(){
         return $this->belongsTo('App\Models\User');
+    }
+    public function room(){
+        return $this->belongsTo('App\Models\Room');
     }
 }

@@ -9,15 +9,8 @@
 </head>
 <body>
   <section class="section">
-    @foreach ($users as $user)
-    <!-- <form action="/show" method="post"> -->
-      <div>
-        <a href="{{ url('/show', ['id'=>$user->id]) }}">
-          {{$user->name}}
-        </a>
-      </div>
-    <!-- </form> -->
-    @endforeach
+    
+    <p>チャットルーム作成</p>
     @if (count($errors) > 0)
     <ul>
       @foreach ($errors->all() as $error)
@@ -27,12 +20,21 @@
     @endif
     <form class="create" action="/create" method="post">
       @csrf
-      <input class="add-input" type="text" name="text">
+      部屋の名前:<input class="add-input" type="text" name="room_name">
       <input class="add-id" type="hidden" name="user_id" value="{{$authUser}}">
-      <input type="submit" name="create" value="送信">
+      <input type="submit" name="create" value="作成">
     </form>
-    @foreach ($items as $item)
-      <p>{{$item->text}}</p>
+    @foreach ($rooms as $room)
+    <!-- <form action="/show" method="post"> -->
+      <div>
+        <!-- <a href="{{ route('show', ['id'=>$room->id])}}">{{$room->room_name}}</a> -->
+        
+        <a href="{{ url('/show', ['id'=>$room->id]) }}">
+          {{$room->room_name}}
+        </a>
+      </div>
+    <!-- </form> -->
+
     @endforeach
   </section>
 </body>
