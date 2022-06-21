@@ -9,21 +9,15 @@
   <link rel="stylesheet" href="{{ asset('/assets/css/style.css')}}">
 </head>
 <body>
-  <table>
-    <thead>
-      <tr>
-        <th>名前</th>
-        <th>メッセージ</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>{{$item->name}}</td>
-        @foreach ($rooms as $room)
-        <td>{{$room}}</td>
-        @endforeach
-      </tr>
-    </tbody>
-  </table>
+  @foreach ($messages as $message)
+  <div>
+    {{$message->created_at}}:{{$message->name}}:{{$message->text}}
+  </div>
+  @endforeach
+  <form action="/chat/create" method="POST">
+    <input type="text" name="text">
+    <input type="hidden" name="user_id" value="$user->id">
+    <button type="submit" name="room_id" value="$room_id">送信</button>
+  </form>
 </body>
 </html>

@@ -25,16 +25,11 @@
       <input type="submit" name="create" value="作成">
     </form>
     @foreach ($rooms as $room)
-    <!-- <form action="/show" method="post"> -->
       <div>
-        <!-- <a href="{{ route('show', ['id'=>$room->id])}}">{{$room->room_name}}</a> -->
-        
-        <a href="{{ url('/show', ['id'=>$room->id]) }}">
+        <a href="{{ url('/chat', ['id'=>$room->id]) }}">
           {{$room->room_name}}
         </a>
       </div>
-    <!-- </form> -->
-
     @endforeach
   </section>
 </body>

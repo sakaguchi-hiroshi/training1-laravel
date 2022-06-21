@@ -2,85 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreroomRequest;
-use App\Http\Requests\UpdateroomRequest;
+use Illuminate\Http\Request;
 use App\Models\room;
+use App\Models\Message;
+use Illuminate\Support\Facades\Auth;
 
 class RoomController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     
     public function create(Request $request)
     {
-        //
+        // dd($request->all());
+        $this->validate($request, Message::$rules);
+        Message::create([
+            'text' => $request->text,
+            'user_id' => $request->user_id,
+            'room_id' => $request->room_id,
+        ]);
+        return redirect('/chat');
     }
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreroomRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreroomRequest $request)
+    
+    public function index($id)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\room  $room
-     * @return \Illuminate\Http\Response
-     */
-    public function show(room $room)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\room  $room
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(room $room)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateroomRequest  $request
-     * @param  \App\Models\room  $room
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateroomRequest $request, room $room)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\room  $room
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(room $room)
-    {
-        //
+        // dd($id);
+        $room_id = $id;
+        $user = Auth::user();
+        $messages = Message::where('room_id', $id)->get();
+        $params = [
+                'room_id' => $room_id,
+                'user' => $user,
+                'messages' => $messages,
+        ];
+        return view('show', $params);
     }
 }

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\RoomController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,8 @@ use App\Http\Controllers\MessageController;
 Route::get('/', [MessageController::class, 'index']);
 Route::post('/create', [MessageController::class, 'create']);
 Route::get('/logout', [MessageController::class, 'logout']);
-Route::get('/show/{id}', [MessageController::class, 'show'])->name('show');
+Route::get('/chat{id}', [RoomController::class, 'index'])->name('show');
+Route::post('/chat/create', [RoomController::class, 'create']);
 
 // Route::get('dashboard', function () {
 //     return view('index');
