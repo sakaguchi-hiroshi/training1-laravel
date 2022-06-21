@@ -9,20 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class RoomController extends Controller
 {
-    
-    public function create(Request $request)
-    {
-        // dd($request->all());
-        $this->validate($request, Message::$rules);
-        Message::create([
-            'text' => $request->text,
-            'user_id' => $request->user_id,
-            'room_id' => $request->room_id,
-        ]);
-        return redirect('/chat');
-    }
-    
-    public function index($id)
+    public function chat_index($id)
     {
         // dd($id);
         $room_id = $id;
@@ -35,4 +22,17 @@ class RoomController extends Controller
         ];
         return view('show', $params);
     }
+    
+    public function chat_create(Request $request)
+    {
+        // dd($request->all());
+        $this->validate($request, Message::$rules);
+        Message::create([
+            'text' => $request->text,
+            'user_id' => $request->user_id,
+            'room_id' => $request->room_id,
+        ]);
+        return redirect('/chat');
+    }
+    
 }

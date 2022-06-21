@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Room;
+use App\Models\Message;
 use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
@@ -36,7 +37,31 @@ class MessageController extends Controller
         // $form->create($form);
         return redirect('/');
     }
-    
+    public function chat_index($id)
+    {
+        // dd($id);
+        $room_id = $id;
+        $user = Auth::user();
+        $messages = Message::where('room_id', $id)->get();
+        $params = [
+                'room_id' => $room_id,
+                'user' => $user,
+                'messages' => $messages,
+        ];
+        return view('show', $params);
+    }
+
+    public function chat_create(Request $request)
+    {
+        // dd($request->all());
+        $this->validate($request, Message::$rules);
+        Message::create([
+            'text' => $request->text,
+            'user_id' => $request->user_id,
+            'room_id' => $request->room_id,
+        ]);
+        return redirect('/chat');
+    }
 
     // 追記:ログインしていない場合loginページに移動させる
     public function __construct(){
@@ -47,12 +72,4 @@ class MessageController extends Controller
     public function logout(){
         return Auth::logout();
     }
-
-
-    // public function show(Request $request) 
-    // {
-    //     // $user = $items->text();
-    //     // return view('index', ['user' => $user]);
-
-    // }
 }
