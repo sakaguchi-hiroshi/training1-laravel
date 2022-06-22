@@ -21,8 +21,8 @@ use App\Http\Controllers\RoomController;
 Route::get('/', [MessageController::class, 'index']);
 Route::post('/create', [MessageController::class, 'create']);
 Route::get('/logout', [MessageController::class, 'logout']);
-Route::get('/chat{id}', [MessageController::class, 'chat_index'])->name('show');
-Route::post('/chat/create', [MessageController::class, 'chat_create']);
+Route::get('/chat/{id}', [RoomController::class, 'index'])->name('show');
+Route::post('/chat/create', [RoomController::class, 'create']);
 
 // Route::get('dashboard', function () {
 //     return view('index');
